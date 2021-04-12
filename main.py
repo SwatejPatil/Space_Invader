@@ -8,6 +8,9 @@ pygame.init()
 #Created Game Window
 screen = pygame.display.set_mode((800,600))
 
+#Background
+backgorund = pygame.image.load('/home/mrj/Documents/Python/Pygame/SpaceInvader/space.png')
+
 #Title and Icon
 pygame.display.set_caption("Space Invader")
 icon = pygame.image.load('/home/mrj/Documents/Python/Pygame/SpaceInvader/ufo.png')
@@ -25,7 +28,8 @@ enemyImg = pygame.image.load('/home/mrj/Documents/Python/Pygame/SpaceInvader/ali
 enemyX = random.randint(0, 800)
 enemyY = random.randint(50, 150)
 
-enemyX_change = 0
+enemyX_change = 0.5
+enemyY_change = 30
 
 def player(x, y):
     screen.blit(playerImg,(x ,y))
@@ -37,8 +41,13 @@ def enemy(x, y):
 #Main Game Loop
 running = True
 while running:
-    #Backgorund colour
-    screen.fill((25, 0, 25))
+    #Background Image
+    screen.blit(backgorund,(0, 0))
+
+    #Background colour
+   # screen.fill((25, 0, 25))
+
+
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -58,6 +67,7 @@ while running:
     #Backgorund colour
     screen.fill((2, 0, 9))
 
+    #Checking Boundries Player
     playerX += playerX_change
     
     if playerX <= 0:
@@ -66,6 +76,15 @@ while running:
         playerX = 736
 
 
+    #Enemy Movement
+    enemyX += enemyX_change
+    
+    if enemyX <= 0:
+        enemyX_change = 0.5
+        enemyY += enemyY_change
+    elif enemyX >=736:
+        enemyX_change = -0.5
+        enemyY += enemyY_change
 
 
     player(playerX, playerY)
