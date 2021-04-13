@@ -28,7 +28,7 @@ enemyImg = pygame.image.load('/home/mrj/Documents/Python/Pygame/SpaceInvader/ali
 enemyX = 0
 enemyY = 480
 
-enemyX_change = 0.5
+enemyX_change = 10
 enemyY_change = 30
 
 #Bulle
@@ -57,7 +57,10 @@ running = True
 while running:
 
     #Background colour
-    screen.fill((25, 0, 25))
+    screen.fill((0, 0, 0))
+
+    #background Image
+    screen.blit(backgorund, (0, 0))
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -66,9 +69,9 @@ while running:
     #Keystroke left or right
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_LEFT:
-            playerX_change = -1
+            playerX_change = -17
         if event.key == pygame.K_RIGHT:
-            playerX_change = 1
+            playerX_change = 17
         if event.key == pygame.K_SPACE:
             fire_bullet(playerX, bulletY)
 
@@ -93,10 +96,10 @@ while running:
     enemyX += enemyX_change
     
     if enemyX <= 0:
-        enemyX_change = 0.5
+        enemyX_change = 10
         enemyY += enemyY_change
     elif enemyX >=736:
-        enemyX_change = -0.5
+        enemyX_change = -10
         enemyY += enemyY_change
     
     #bullet movement
