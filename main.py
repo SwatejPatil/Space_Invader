@@ -29,7 +29,7 @@ BLUE_LASER = pygame.image.load('blue_bullet.png')
 YELLOW_LASER = pygame.image.load('bullet.png')
 
 #Background
-BG = pygame.image.load('space.png')
+BG = pygame.transform.scale(pygame.image.load(os.path.join("space.png")), (WIDTH, HEIGHT))
 
 class Laser:
 	def __init__(self, x, y, img):
@@ -131,7 +131,7 @@ class Player(Ship):
 		if self.cool_down_counter == 0:
 			laser = Laser(self.x+15, self.y, self.laser_img)
 			self.lasers.append(laser)
-			self.cool_down_counter = 1
+			self.cool_down_counter = 10
 
 
 
@@ -179,7 +179,7 @@ def main():
 	FPS = 60
 	level = 0
 	lives = 5
-	main_font = pygame.font.SysFont("comicsans", 30)
+	main_font = pygame.font.SysFont("comicsans", 50)
 	lost_font = pygame.font.SysFont("comicsans", 50)
 
 	enemies = []
@@ -237,7 +237,7 @@ def main():
 			wave_lenth += 5
 
 			for i in range(wave_lenth):
-				enemy = Enemy(random.randrange(50, WIDTH-100), random.randrange(-1500, -100), random.choice(["red", "blue", "green"]))
+				enemy = Enemy(random.randrange(50, WIDTH-100), random.randrange(-1000, -100), random.choice(["red", "blue", "green"]))
 				enemies.append(enemy)
 
 		for event in pygame.event.get():
@@ -262,7 +262,7 @@ def main():
 			enemy.move(enemy_vel)
 			enemy.move_lasers(laser_vel, player)
 
-			if random.randrange(0, 1*60) == 1:
+			if random.randrange(0, 10*60) == 1:
 				enemy.shoot()
 
 			if collide(enemy, player):
@@ -277,7 +277,7 @@ def main():
 
 
 def main_menu():
-	title_font = pygame.font.SysFont("comicsans", 40)
+	title_font = pygame.font.SysFont("arial", 40)
 
 	run = True
 	while run:
@@ -289,8 +289,9 @@ def main_menu():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False
-			if event.type == pygame.MOUSEBUTTONDOWN:
-				main()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_RETURN:
+					main()
 
 	pygame.quit()
 
