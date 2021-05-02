@@ -2,6 +2,7 @@ import pygame
 import os
 import time
 import random
+from pygame import mixer
 
 pygame.init()
 pygame.font.init()
@@ -30,6 +31,11 @@ PLAYER_BULLET = pygame.image.load('bullet.png')
 
 #Background
 BG = pygame.transform.scale(pygame.image.load(os.path.join("space.png")), (WIDTH, HEIGHT))
+
+#Background Sound
+mixer.music.load('background.wav')
+mixer.music.play(-1)
+
 
 class Laser:
 	def __init__(self, x, y, img):
@@ -129,6 +135,8 @@ class Player(Ship):
 
 	def shoot(self):
 		if self.cool_down_counter == 0:
+			bullet_sound = mixer.Sound('laser.wav')
+			bullet_sound.play()
 			laser = Laser(self.x+15, self.y, self.laser_img)
 			self.lasers.append(laser)
 			self.cool_down_counter = 10
