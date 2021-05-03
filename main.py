@@ -178,6 +178,7 @@ class Enemy(Ship):
 
 
 def collide(obj1, obj2):
+		
 	offset_x = obj2.x - obj1.x
 	offset_y = obj2.y - obj1.y
 	return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) != None
@@ -270,10 +271,12 @@ def main():
 			enemy.move(enemy_vel)
 			enemy.move_lasers(laser_vel, player)
 
-			if random.randrange(0, 10*60) == 1:
+			if random.randrange(0, 6*60) == 1:
 				enemy.shoot()
 
 			if collide(enemy, player):
+				explosion_sound = mixer.Sound('explosion.wav')
+				explosion_sound.play()
 				player.health -= 10
 				enemies.remove(enemy)
 
